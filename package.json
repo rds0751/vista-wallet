@@ -2,6 +2,7 @@
   "name": "humaniqmobile",
   "version": "1.7.1",
   "private": false,
+  "main": "index.js",
   "scripts": {
     "android": "yarn rnuc:prod && react-native run-android",
     "android:dev": "yarn rnuc:dev && react-native run-android --appIdSuffix dev --main-activity MainActivity",
@@ -24,8 +25,9 @@
     "clean": "react-native-clean-project",
     "clean-all": "npx react-native clean-project-auto",
     "postinstall": "cp ./react.gradle ./node_modules/react-native/react.gradle &&  bash ./scripts/postinstall.sh",
-    "rnuc:dev": "yarn rnuc ./envs/dev.yml",
-    "rnuc:prod": "yarn rnuc ./envs/prod.yml"
+    "rnuc:dev": "$(npm bin)/rnuc ./envs/dev.yml",
+    "rnuc:prod": "$(npm bin)/rnuc ./envs/prod.yml",
+    "rnuc": "$(npm bin)/rnuc"
   },
   "dependencies": {
     "@ethersproject/shims": "^5.5.0",
@@ -110,7 +112,6 @@
     "react-native-responsive-linechart": "^5.7.1",
     "react-native-restart": "^0.0.24",
     "react-native-safe-area-context": "^3.3.0",
-    "react-native-screens": "^3.5.0",
     "react-native-shadow-2": "^5.1.0",
     "react-native-share": "^7.2.0",
     "react-native-simple-toast": "^1.1.3",

@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/react-native";
 import { Transaction } from "@sentry/types";
 import { EVENTS } from "../../config/events";
 

@@ -10,7 +10,6 @@ import {
     tProp as p,
     types as t
 } from "mobx-keystone"
-import * as Sentry from "@sentry/react-native";
 import { ethers, Signer } from "ethers"
 import { computed, observable, reaction } from "mobx"
 import { beautifyNumber, currencyFormat, preciseRound } from "../../utils/number"
@@ -106,7 +105,6 @@ export class Wallet extends Model({
 
                 } catch (e) {
                     console.log("ERROR-INIT-WALLET", e)
-                    Sentry.captureException(e)
                     runUnprotected(() => {
                         this.isError = true
                     })
@@ -134,7 +132,7 @@ export class Wallet extends Model({
             }
         } catch (e) {
             console.log("ERROR-UPDATE-BALANCE-FROM-PROVIDER", e)
-            Sentry.captureException(e)
+            
             this.isError = true
         }
         profiler.end(id)
@@ -149,7 +147,7 @@ export class Wallet extends Model({
         if (balances.ok) {
             this.balances = balances.data.item
         } else {
-            Sentry.captureException(balances)
+            
             this.isError = true
         }
     }
@@ -165,7 +163,6 @@ export class Wallet extends Model({
             this.prices = cost.data[getEVMProvider().currentNetwork.nativeCoin]
         } else {
             this.isError = true
-            Sentry.captureException(cost?.problem?.origianalError)
         }
         profiler.end(id)
     }
@@ -227,7 +224,7 @@ export class Wallet extends Model({
             }
         } catch (e) {
             console.log("ERROR-LOAD-TRANSACTIONS", e)
-            Sentry.captureException(e)
+            
         }
         profiler.end(id)
     }
@@ -306,7 +303,7 @@ export class Wallet extends Model({
             }
         } catch (e) {
             console.log("ERROR-GET-TOKEN-TRANSACTIONS", e)
-            Sentry.captureException(e)
+            
         }
         profiler.end(id)
     }
