@@ -3,7 +3,7 @@
   "version": "1.7.1",
   "private": false,
   "scripts": {
-    "android": "yarn rnuc:prod && react-native run-android",
+    "android": "react-native run-android",
     "android:dev": "yarn rnuc:dev && react-native run-android --appIdSuffix dev --main-activity MainActivity",
     "ios": "react-native run-ios",
     "start": "react-native start",
