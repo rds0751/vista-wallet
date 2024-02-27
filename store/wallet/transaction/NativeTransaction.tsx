@@ -23,7 +23,6 @@ import { localStorage } from "../../../utils/localStorage";
 import { HIcon } from "../../../components/icon";
 import { closeToast, setPendingAppToast } from "../../../utils/toast";
 import { CircularProgress } from "../../../components/progress/CircularProgress";
-import * as Sentry from "@sentry/react-native";
 import { profiler } from "../../../utils/profiler/profiler";
 import { EVENTS, MARKETING_EVENTS } from "../../../config/events";
 import { events } from "../../../utils/events";
@@ -113,7 +112,6 @@ export class NativeTransaction extends Model({
             return tx
         } catch (e) {
             console.log("ERROR-SEND-TRANSACTION", e)
-            Sentry.captureException(e)
             profiler.end(id)
             return false
         }

@@ -23,7 +23,6 @@ import { capitalize, throttle } from "../../../utils/general";
 import { NATIVE_COIN_SYMBOL } from "../../../config/network";
 import { profiler } from "../../../utils/profiler/profiler";
 import { EVENTS } from "../../../config/events";
-import * as Sentry from "@sentry/react-native";
 
 export class SendTransactionViewModel {
 
@@ -359,7 +358,6 @@ export class SendTransactionViewModel {
         } catch (e) {
             this.txError = true
             console.log("ERROR-send-tx", e)
-            Sentry.captureException(e)
         } finally {
             this.pendingTransaction = false
         }

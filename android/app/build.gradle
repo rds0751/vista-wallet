@@ -85,7 +85,6 @@ project.ext.react = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-ultimate-config/android/rnuc.gradle"
-apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -124,15 +123,6 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
-// Create a variable called keystorePropertiesFile, and initialize it to your
-// keystore.properties file, in the rootProject folder.
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-
-// Initialize a new Properties() object called keystoreProperties.
-def keystoreProperties = new Properties()
-
-// Load your keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 /**
  * Architectures to build native code for in debug.
@@ -149,11 +139,11 @@ android {
     }
 
     defaultConfig {
-        applicationId project.config.get("APPLICATION_ID")
+        applicationId "com.humaniq"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode project.config.get("APP_VERSION_CODE")
-        versionName project.config.get("APP_VERSION_NAME")
+        versionCode 11
+        versionName "1.7.3"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
         testBuildType System.getProperty('testBuildType', 'debug')
@@ -169,20 +159,16 @@ android {
     }
     signingConfigs {
         debug {
-            if (keystorePropertiesFile.exists()) {
-                storeFile file(keystoreProperties['UPLOAD_STORE_FILE'])
-                storePassword keystoreProperties['UPLOAD_STORE_PASSWORD']
-                keyAlias keystoreProperties['UPLOAD_KEY_ALIAS']
-                keyPassword keystoreProperties['UPLOAD_KEY_PASSWORD']
-            }
+            storeFile file('humaniqmobile.keystore')
+            storePassword 'smarty24'
+            keyAlias 'com.humaniqmobile'
+            keyPassword 'smarty24'
         }
         release {
-            if (keystorePropertiesFile.exists()) {
-                storeFile file(keystoreProperties['UPLOAD_STORE_FILE'])
-                storePassword keystoreProperties['UPLOAD_STORE_PASSWORD']
-                keyAlias keystoreProperties['UPLOAD_KEY_ALIAS']
-                keyPassword keystoreProperties['UPLOAD_KEY_PASSWORD']
-            }
+            storeFile file('humaniqmobile.keystore')
+            storePassword 'smarty24'
+            keyAlias 'com.humaniqmobile'
+            keyPassword 'smarty24'
         }
     }
     buildTypes {
@@ -209,7 +195,7 @@ android {
 
     buildscript {
         // ...
-        ext.kotlinVersion = '1.3.0' // (check what the latest version is!)
+        ext.kotlinVersion = '1.4.0' // (check what the latest version is!)
         dependencies {
             // ...
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"

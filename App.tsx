@@ -20,7 +20,6 @@ import { observer } from "mobx-react-lite"
 import { NavigationContainerRef } from "@react-navigation/native"
 import * as storage from "./utils/localStorage"
 import { canExit, RootNavigator, setRootNavigation, useBackButtonHandler, useNavigationPersistence } from "./navigators"
-import { enableScreens } from "react-native-screens"
 import { configure } from "mobx"
 import "./theme/color"
 import "./theme/typography"
@@ -52,7 +51,6 @@ import {
 } from "./components/dialogs/selectTransactionFeeDialog/SelectTransactionFeeDialogViewModel";
 import { Splash } from "./components/splash/Splash";
 import { BrowserStore } from "./store/browser/BrowserStore";
-import * as Sentry from "@sentry/react-native";
 import { applyTheme } from "./theme/componentTheme";
 import { CustomFallback } from "./components/customFallback/CustomFallback";
 import { CENTRY_URL } from "./envs/env";
@@ -67,7 +65,6 @@ import { events } from "./utils/events";
 
 applyTheme()
 
-const routingInstrumentation = new Sentry.ReactNavigationInstrumentation()
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -81,8 +78,6 @@ LogBox.ignoreLogs([
     "RNUILib TextField component will soon be replaced",
     "Module TcpSockets requires main queue setup",
 ])
-
-enableScreens()
 
 configure({
     enforceActions: "never"
@@ -208,18 +203,4 @@ App.register(
     ApprovalWalletConnectDialogViewModel
 )
 
-// if (!isDev) {
-Sentry.init({
-    dsn: CENTRY_URL,
-    tracesSampleRate: 1.0,
-    integrations: [
-        new Sentry.ReactNativeTracing({
-            routingInstrumentation,
-        }),
-    ],
-});
-
-Sentry.wrap(App)
-// }
-
-export default Sentry.withProfiler(App)
+export default React.memo(App);
